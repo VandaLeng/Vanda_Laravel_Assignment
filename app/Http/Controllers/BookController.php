@@ -50,6 +50,11 @@ class BookController extends Controller
     public function store(Request $request)
     {
         //
+        $bookData = $request->all();
+        return response()->json([
+            'message' =>'Book Created Successfully',
+           'data' => $bookData 
+        ], 201);
     }
 
     /**

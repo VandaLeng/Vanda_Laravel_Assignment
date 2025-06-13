@@ -18,6 +18,8 @@ use App\Http\Controllers\BookController; // Correct import with capital A in App
 Route::get('/books', [BookController::class, 'index']);
 // Route to create book (POST /api/books/create)
 Route::post('/books/create', [BookController::class, 'create']);
+// Route for storing book data (POST /api/books/store)
+Route::post('/books/store', [BookController::class, 'store']);
 // Example route with auth middleware (optional)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
