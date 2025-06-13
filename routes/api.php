@@ -26,6 +26,8 @@ Route::get('/books/{id}', [BookController::class, 'show']);
 Route::get('/books/edit/{id}', [BookController::class, 'edit']);
 // PUT to update book
 Route::put('/books/{id}', [BookController::class, 'update']);
+// DELETE to remove book
+Route::delete('/books/{id}', [BookController::class, 'destroy']);
 // Example route with auth middleware (optional)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
