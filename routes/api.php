@@ -22,6 +22,8 @@ Route::post('/books/create', [BookController::class, 'create']);
 Route::post('/books/store', [BookController::class, 'store']);
 // GET one book by ID
 Route::get('/books/{id}', [BookController::class, 'show']);
+// GET for editing one book by ID
+Route::get('/books/edit/{id}', [BookController::class, 'edit']);
 // Example route with auth middleware (optional)
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
