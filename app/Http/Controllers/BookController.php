@@ -103,8 +103,14 @@ class BookController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Simulate update and return response
+        return response()->json([
+            'message' => 'Book updated successfully',
+            'id' => $id,
+            'data' => $request->all()
+        ]);
     }
+
 
     /**
      * Remove the specified resource from storage.
