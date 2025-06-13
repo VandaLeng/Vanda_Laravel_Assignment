@@ -15,7 +15,6 @@ class BookController extends Controller
         return response()->json([
             // Message to confirm the API call was successful
             'message' => 'Book successfully',
-
             // 'data' contains one book object with full structure
             'data' => [
                 'id' => '1a2b3c4d',
@@ -36,6 +35,7 @@ class BookController extends Controller
     public function create()
     {
         //
+        
     }
 
     /**
