@@ -32,11 +32,17 @@ class BookController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
-        
+        // Return JSON response with message only, no data sent back
+        return response()->json([
+            // Message to confirm API call for create
+            'message' => 'Create Post',
+            // Empty data object
+             'data' => $request->all() 
+        ], 201); // HTTP status 201 = Created
     }
+
 
     /**
      * Store a newly created resource in storage.
