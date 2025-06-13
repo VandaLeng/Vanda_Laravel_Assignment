@@ -53,7 +53,7 @@ class BookController extends Controller
         $bookData = $request->all();
         return response()->json([
             'message' =>'Book Created Successfully',
-           'data' => $bookData 
+            'data' => $bookData 
         ], 201);
     }
 
@@ -63,6 +63,19 @@ class BookController extends Controller
     public function show(string $id)
     {
         //
+        return response()->json([
+            'message'=> 'Book details',
+            'data'=>[
+                'id' => $id,
+                'title' => 'Learn Laravel',
+                'authorId' => 'author123',
+                'isbn' => '978-1-23456-789-0',
+                'publicationYear' => 2024,
+                'genre' => 'Programming',
+                'availableCopies' => 3
+            ]
+
+        ]);
     }
 
     /**
