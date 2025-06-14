@@ -42,7 +42,12 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // storing author
+        return response()->json([
+            'message' => 'Author Created Sucessfully',
+            'data' => $request->all()
+            
+        ], 201);    
     }
 
     /**
