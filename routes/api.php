@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController; // Correct import with Bookcontroller
 use App\Http\Controllers\AuthorController;// Correct import with Authorcontroller
+use App\Http\Controllers\UserController;// Correct import with Usercontroller
 
 
 /*
@@ -43,6 +44,10 @@ Route::prefix('author')->group(function () {
     Route::post('/edit/{id}', [AuthorController::class, 'edit']);
     Route::post('/update/{id}', [AuthorController::class, 'update']);
     Route::post('/delete/{id}', [AuthorController::class, 'destroy']);
+});
+Route::prefix('user')->group(function () {
+    Route::post('/index', [UserController::class, 'index']);
+
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
