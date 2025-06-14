@@ -37,6 +37,7 @@ Route::delete('/books/{id}', [BookController::class, 'destroy']);
 Route::prefix('author')->group(function () {
     // POST methods for testing in Thunder Client
     Route::post('/index', [AuthorController::class, 'index']);
+    Route::post('/create', [AuthorController::class, 'create']);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

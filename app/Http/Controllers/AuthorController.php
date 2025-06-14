@@ -22,18 +22,22 @@ class AuthorController extends Controller
                 'bio' => 'Author of tech books',
                 'nationality' => 'American'
             ]
-        ]);
+        ],200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //creation response 
+        return response()->json([
+            'message'=> 'Create Author',
+            'data'=> $request->all()
+        ],201);
     }
 
-    /**
+    /** 
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
