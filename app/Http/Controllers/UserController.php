@@ -44,8 +44,12 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        return response()->json([
+            'message' => 'User Stored',
+            'data' => $request->all()
+        ], 201);
     }
-
+    
     /**
      * Display the specified resource.
      */
