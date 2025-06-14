@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController; // Correct import with capital A in App
+use App\Http\Controllers\BookController; // Correct import with Bookcontroller
+use App\Http\Controllers\AuthorController;// Correct import with Authorcontroller
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,13 @@ Route::put('/books/{id}', [BookController::class, 'update']);
 // DELETE to remove book
 Route::delete('/books/{id}', [BookController::class, 'destroy']);
 // Example route with auth middleware (optional)
+
+
+// API group with prefix 'author'
+Route::prefix('author')->group(function () {
+    // POST methods for testing in Thunder Client
+    Route::post('/index', [AuthorController::class, 'index']);
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
