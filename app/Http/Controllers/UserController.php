@@ -73,6 +73,15 @@ class UserController extends Controller
     public function edit(string $id)
     {
         //
+        return response()->json([
+            'message' => 'Edit User',
+            'data' => [
+                'id' => $id,
+                'name' => 'Vanda',
+                'email' => 'vandaedit@example.com',
+                'membershipDate' => '2024-01-01'
+            ]
+        ], 200);
     }
 
     /**
