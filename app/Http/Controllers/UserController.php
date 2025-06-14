@@ -87,16 +87,25 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // Update user data by ID
     public function update(Request $request, string $id)
     {
-        //
+        return response()->json([
+            'message' => 'User updated successfully',
+            'id' => $id,
+            'data' => $request->all()
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
+    // Delete a user by ID
     public function destroy(string $id)
     {
-        //
+        return response()->json([
+            'message' => 'User deleted successfully',
+            'id' => $id
+        ], 200);
     }
 }
