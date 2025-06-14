@@ -55,8 +55,18 @@ class AuthorController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Showing author
+        return response()->json([
+            'message' => 'Author Found',
+            'data' => [
+                'id' => $id,
+                'name' => 'Vanda Leng',
+                'bio' => 'Author History',
+                'nationality' => 'Cambodia'
+            ]
+        ], 200);
     }
+
 
     /**
      * Show the form for editing the specified resource.
