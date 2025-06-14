@@ -90,6 +90,11 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        return response()->json([
+            'message' => 'User Updated',
+            'id' => $id,
+            'data' => $request->all()
+        ], 200);
     }
 
     /**
