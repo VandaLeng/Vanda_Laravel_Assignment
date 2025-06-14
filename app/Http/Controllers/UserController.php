@@ -13,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         return response()->json([
-            'message' => 'All Users',
+            'message' => 'All users fetched successfully',
             'data' => [
                 [
                     'id' => 'user001',
@@ -28,24 +28,23 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    // Create new user with provided data
     public function create(Request $request)
     {
-        //
         return response()->json([
-            'message' => 'Create User',
+            'message' => 'User created successfully',
             'data' => $request->all()
         ], 201);
-
     }
 
     /**
      * Store a newly created resource in storage.
      */
+    // Store new user information
     public function store(Request $request)
     {
-        //
         return response()->json([
-            'message' => 'User Stored',
+            'message' => 'User stored successfully',
             'data' => $request->all()
         ], 201);
     }
@@ -53,11 +52,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
+    // Show a single user by ID
     public function show(string $id)
     {
-        //
         return response()->json([
-            'message' => 'User Found',
+            'message' => 'User found successfully',
             'data' => [
                 'id' => $id,
                 'name' => 'Vanda Leng',
@@ -70,11 +69,11 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    // Show user data for editing
     public function edit(string $id)
     {
-        //
         return response()->json([
-            'message' => 'Edit User',
+            'message' => 'User edit form fetched successfully',
             'data' => [
                 'id' => $id,
                 'name' => 'Vanda',
@@ -87,11 +86,11 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // Update user data by ID
     public function update(Request $request, string $id)
     {
-        //
         return response()->json([
-            'message' => 'User Updated',
+            'message' => 'User updated successfully',
             'id' => $id,
             'data' => $request->all()
         ], 200);
@@ -100,8 +99,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // Delete a user by ID
     public function destroy(string $id)
     {
-        //
+        return response()->json([
+            'message' => 'User deleted successfully',
+            'id' => $id
+        ], 200);
     }
 }

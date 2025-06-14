@@ -52,6 +52,7 @@ Route::prefix('user')->group(function () {
     Route::post('/show/{id}', [UserController::class, 'show']);
     Route::post('/edit/{id}', [UserController::class, 'edit']);
     Route::post('/update/{id}', [UserController::class, 'update']);
+    Route::post('/delete/{id}', [UserController::class, 'destroy']);
 
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
