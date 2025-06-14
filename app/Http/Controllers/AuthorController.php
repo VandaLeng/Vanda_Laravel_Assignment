@@ -90,6 +90,11 @@ class AuthorController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        return response()->json([
+            'message' => 'Author Updated',
+            'id' => $id,
+            'updatedData' => $request->all()
+        ]);
     }
 
     /**

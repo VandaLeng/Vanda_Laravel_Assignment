@@ -41,6 +41,7 @@ Route::prefix('author')->group(function () {
     Route::post('/store', [AuthorController::class, 'store']);
     Route::post('/show/{id}', [AuthorController::class, 'show']);
     Route::post('/edit/{id}', [AuthorController::class, 'edit']);
+    Route::post('/update/{id}', [AuthorController::class, 'update']);
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
