@@ -49,13 +49,22 @@ class UserController extends Controller
             'data' => $request->all()
         ], 201);
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
         //
+        return response()->json([
+            'message' => 'User Found',
+            'data' => [
+                'id' => $id,
+                'name' => 'Vanda Leng',
+                'email' => 'vanda@example.com',
+                'membershipDate' => '2024-01-01'
+            ]
+        ], 200);
     }
 
     /**
