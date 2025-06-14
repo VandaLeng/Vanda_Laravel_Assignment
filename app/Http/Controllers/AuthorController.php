@@ -14,7 +14,7 @@ class AuthorController extends Controller
         // Return a JSON response for one author only
         return response()->json([
             // Success message
-            'message' => 'All Authors',
+            'message' => 'All Authors Successfully',
             // One author data
             'data' => [
                 'id' => 'auth001',
@@ -32,7 +32,7 @@ class AuthorController extends Controller
     {
         //creation response 
         return response()->json([
-            'message'=> 'Create Author',
+            'message'=> 'Create AuthorSuccessfully',
             'data'=> $request->all()
         ],201);
     }
@@ -75,13 +75,13 @@ class AuthorController extends Controller
     {
         //
         return response()->json([
-            'message'=> "Edit Author",
+            'message'=> "Edit Author Successfully",
             'data'=>[
                 'id' => $id,
                 'name' => "Vanda Leng",
              
             ]
-            ]);
+            ],201);
     }
 
     /**
@@ -89,12 +89,12 @@ class AuthorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // update Author
         return response()->json([
-            'message' => 'Author Updated',
+            'message' => 'Author Updated Successfully',
             'id' => $id,
             'updatedData' => $request->all()
-        ]);
+        ],200);
     }
 
     /**
@@ -102,6 +102,10 @@ class AuthorController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //Destory Author
+        return response()->json([
+            'message' => "Author Deleted Successfully",
+            'id' => $id
+        ],200);
     }
 }
