@@ -74,6 +74,14 @@ class AuthorController extends Controller
     public function edit(string $id)
     {
         //
+        return response()->json([
+            'message'=> "Edit Author",
+            'data'=>[
+                'id' => $id,
+                'name' => "Vanda Leng",
+             
+            ]
+            ]);
     }
 
     /**
