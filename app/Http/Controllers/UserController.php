@@ -1,107 +1,114 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     // Get all users
     public function index()
     {
+        $users = User::all();
         return response()->json([
             'message' => 'All users fetched successfully',
-            'data' => [
-                [
-                    'id' => 'user001',
-                    'name' => 'Vanda Leng',
-                    'email' => 'vanda@example.com',
-                    'membershipDate' => '2024-01-01'
-                ]
-            ]
+            'data' => $users
         ], 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    // Create new user with provided data
+    // Create new user with validation and save to DB
     public function create(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
         return response()->json([
-            'message' => 'User created successfully',
-            'data' => $request->all()
+            'message' => 'User created and saved successfully',
+            'data' => $user
         ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    // Store new user information
-    public function store(Request $request)
-    {
-        return response()->json([
-            'message' => 'User stored successfully',
-            'data' => $request->all()
-        ], 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
     // Show a single user by ID
     public function show(string $id)
     {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
         return response()->json([
             'message' => 'User found successfully',
-            'data' => [
-                'id' => $id,
-                'name' => 'Vanda Leng',
-                'email' => 'vanda@example.com',
-                'membershipDate' => '2024-01-01'
-            ]
+            'data' => $user
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     // Show user data for editing
     public function edit(string $id)
     {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
         return response()->json([
             'message' => 'User edit form fetched successfully',
-            'data' => [
-                'id' => $id,
-                'name' => 'Vanda',
-                'email' => 'vandaedit@example.com',
-                'membershipDate' => '2024-01-01'
-            ]
+            'data' => $user
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     // Update user data by ID
     public function update(Request $request, string $id)
     {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $request->validate([
+            'name' => 'sometimes|required|string',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|required|string|min:6',
+        ]);
+
+        $user->name = $request->name ?? $user->name;
+        $user->email = $request->email ?? $user->email;
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
+
         return response()->json([
             'message' => 'User updated successfully',
-            'id' => $id,
-            'data' => $request->all()
+            'data' => $user
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     // Delete a user by ID
     public function destroy(string $id)
     {
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $user->delete();
+
         return response()->json([
             'message' => 'User deleted successfully',
             'id' => $id

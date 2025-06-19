@@ -17,23 +17,12 @@ use App\Http\Controllers\UserController;// Correct import with Usercontroller
 |
 */
 
-// Route to call index() in BookController
-Route::get('/books', [BookController::class, 'index']);
-// Route to create book (POST /api/books/create)
-Route::post('/books/create', [BookController::class, 'create']);
-// Route for storing book data (POST /api/books/store)
-Route::post('/books/store', [BookController::class, 'store']);
-// GET one book by ID
-Route::get('/books/{id}', [BookController::class, 'show']);
-// GET for editing one book by ID
-Route::get('/books/edit/{id}', [BookController::class, 'edit']);
-// PUT to update book
-Route::put('/books/{id}', [BookController::class, 'update']);
-// DELETE to remove book
-Route::delete('/books/{id}', [BookController::class, 'destroy']);
-// Example route with auth middleware (optional)
-
-
+Route::get('/books', [BookController::class, 'index']);              // Get all books
+Route::post('/books/create', [BookController::class, 'create']);    // Create new book
+Route::get('/books/{id}', [BookController::class, 'show']);         // Get book by ID
+Route::get('/books/edit/{id}', [BookController::class, 'edit']);    // Get book edit form data (optional)
+Route::put('/books/{id}', [BookController::class, 'update']);       // Update book by ID
+Route::delete('/books/{id}', [BookController::class, 'destroy']);   // Delete book by ID
 // API group with prefix 'author'
 Route::prefix('author')->group(function () {
     // POST methods for testing in Thunder Client
@@ -46,14 +35,12 @@ Route::prefix('author')->group(function () {
     Route::post('/delete/{id}', [AuthorController::class, 'destroy']);
 });
 Route::prefix('user')->group(function () {
-    Route::post('/index', [UserController::class, 'index']);
-    Route::post('/create', [UserController::class, 'create']);
-    Route::post('/store', [UserController::class, 'store']);
-    Route::post('/show/{id}', [UserController::class, 'show']);
-    Route::post('/edit/{id}', [UserController::class, 'edit']);
-    Route::post('/update/{id}', [UserController::class, 'update']);
-    Route::post('/delete/{id}', [UserController::class, 'destroy']);
-
+    Route::get('/index', [UserController::class, 'index']);      // Get all users
+    Route::post('/create', [UserController::class, 'create']);   // Create user
+    Route::get('/show/{id}', [UserController::class, 'show']);   // Get user by id
+    Route::get('/edit/{id}', [UserController::class, 'edit']);   // Edit user form data
+    Route::put('/update/{id}', [UserController::class, 'update']); // Update user
+    Route::delete('/delete/{id}', [UserController::class, 'destroy']); // Delete user
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -6,24 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('title'); // Book title
-            $table->string('author'); // Author name
-            $table->string('isbn')->unique(); // ISBN number unique
-            $table->year('publication_year'); // Year published
+            $table->string('title');
+            $table->string('isbn')->unique();
+            $table->integer('publicationYear');
+            $table->string('genre');
+            $table->integer('availableCopies');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('books');
