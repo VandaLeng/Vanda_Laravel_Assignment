@@ -5,13 +5,17 @@
     <title>Library Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             display: flex;
             background: #f1f3f6;
         }
+
         aside {
             width: 220px;
             background: #2c3e50;
@@ -19,10 +23,12 @@
             height: 100vh;
             padding: 20px;
         }
+
         aside h2 {
             font-size: 20px;
             margin-bottom: 20px;
         }
+
         aside a {
             display: block;
             color: white;
@@ -31,13 +37,16 @@
             padding: 10px;
             border-radius: 5px;
         }
+
         aside a:hover {
             background: #1abc9c;
         }
+
         main {
             flex-grow: 1;
             padding: 30px;
         }
+
         .card {
             background: white;
             border-radius: 8px;
@@ -45,33 +54,47 @@
             margin-bottom: 30px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
+
         h1, h2 {
             margin-bottom: 15px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 15px;
         }
+
         th, td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background: #f0f0f0;
         }
+
         .btn {
             padding: 6px 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            margin-right: 5px;
         }
+
         .btn-add {
             background-color: #28a745;
             color: white;
             margin-bottom: 10px;
         }
+
+        .btn-edit {
+            background-color: #007bff;
+            color: white;
+        }
+
         .btn-delete {
             background-color: #dc3545;
             color: white;
