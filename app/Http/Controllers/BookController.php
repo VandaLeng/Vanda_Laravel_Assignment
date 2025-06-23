@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdateBookRequest;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
@@ -18,28 +21,13 @@ class BookController extends Controller
     }
 
     // Create a new book
-    public function create(Request $request)
+    public function create(StorePostRequest $request)
     {
-        try {
-            $request->validate([
-                'title' => 'required|string',
-                'isbn' => 'required|string|unique:books',
-                'publicationYear' => 'required|integer',
-                'genre' => 'required|string',
-                'availableCopies' => 'required|integer',
-            ]);
-
-            $book = Book::create($request->all());
-
-            return response()->json([
-                'message' => 'Book created successfully',
-                'data' => $book
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error: ' . $e->getMessage()
-            ], 500);
-        }
+         $books = Book::create($request->all());
+         return response()->json([
+            'message' => 'Success',
+            'data' => $books
+         ], 201);
     }
 
     // Store method can be removed or return error
@@ -67,7 +55,7 @@ class BookController extends Controller
     }
 
     // Show book data for editing (optional)
-    public function edit(string $id)
+    public function edit(UpdateBookRequest $request, string $id)
     {
         $book = Book::find($id);
         if (!$book) {
@@ -83,27 +71,20 @@ class BookController extends Controller
     }
 
     // Update book by ID
-    public function update(Request $request, string $id)
+   public function update(UpdateBookRequest $request, string $id)
     {
         $book = Book::find($id);
+
         if (!$book) {
             return response()->json([
                 'message' => 'Book not found'
             ], 404);
         }
 
-        $request->validate([
-            'title' => 'sometimes|required|string',
-            'isbn' => 'sometimes|required|string|unique:books,isbn,' . $id,
-            'publicationYear' => 'sometimes|required|integer',
-            'genre' => 'sometimes|required|string',
-            'availableCopies' => 'sometimes|required|integer',
-        ]);
-
         $book->update($request->all());
 
         return response()->json([
-            'message' => 'Book updated successfully',
+            'message' => 'Success',
             'data' => $book
         ], 200);
     }

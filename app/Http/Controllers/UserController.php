@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -18,20 +20,10 @@ class UserController extends Controller
     }
 
     // Create new user with validation and save to DB
-    public function create(Request $request)
+    public function create(StoreUserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
+        $user = User::create($request->all());
         return response()->json([
             'message' => 'User created and saved successfully',
             'data' => $user
@@ -69,7 +61,7 @@ class UserController extends Controller
     }
 
     // Update user data by ID
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         $user = User::find($id);
         if (!$user) {
@@ -77,19 +69,7 @@ class UserController extends Controller
                 'message' => 'User not found'
             ], 404);
         }
-
-        $request->validate([
-            'name' => 'sometimes|required|string',
-            'email' => 'sometimes|required|email|unique:users,email,' . $id,
-            'password' => 'sometimes|required|string|min:6',
-        ]);
-
-        $user->name = $request->name ?? $user->name;
-        $user->email = $request->email ?? $user->email;
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();
+        $user->update($request->all());
 
         return response()->json([
             'message' => 'User updated successfully',

@@ -20,7 +20,7 @@ use App\Http\Controllers\UserController;// Correct import with Usercontroller
 Route::get('/books', [BookController::class, 'index']);              // Get all books
 Route::post('/books/create', [BookController::class, 'create']);    // Create new book
 Route::get('/books/{id}', [BookController::class, 'show']);         // Get book by ID
-Route::get('/books/edit/{id}', [BookController::class, 'edit']);    // Get book edit form data (optional)
+Route::put('/books/edit/{id}', [BookController::class, 'update']);
 Route::put('/books/{id}', [BookController::class, 'update']);       // Update book by ID
 Route::delete('/books/{id}', [BookController::class, 'destroy']);   // Delete book by ID
 // API group with prefix 'author'
@@ -39,7 +39,7 @@ Route::prefix('user')->group(function () {
     Route::post('/create', [UserController::class, 'create']);   // Create user
     Route::get('/show/{id}', [UserController::class, 'show']);   // Get user by id
     Route::get('/edit/{id}', [UserController::class, 'edit']);   // Edit user form data
-    Route::put('/update/{id}', [UserController::class, 'update']); // Update user
+    Route::put('/update/{id}', [UserController::class, 'update']);// Update user
     Route::delete('/delete/{id}', [UserController::class, 'destroy']); // Delete user
 });
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
