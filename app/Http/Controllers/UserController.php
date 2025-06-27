@@ -21,8 +21,8 @@ class UserController extends Controller
 
     // Create new user with validation and save to DB
     public function create(StoreUserRequest $request)
-    {
-
+    { 
+        // Today that I have confort code use with validation 
         $user = User::create($request->all());
         return response()->json([
             'message' => 'User created and saved successfully',
@@ -62,7 +62,8 @@ class UserController extends Controller
 
     // Update user data by ID
     public function update(UpdateUserRequest $request, string $id)
-    {
+    { 
+        // also we can use the validation with the function edit or update
         $user = User::find($id);
         if (!$user) {
             return response()->json([
