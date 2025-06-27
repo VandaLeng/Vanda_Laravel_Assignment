@@ -43,6 +43,7 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = Book::with('author')->find($id);
+
         if (!$book) {
             return response()->json([
                 'message' => 'Book not found'
@@ -51,7 +52,20 @@ class BookController extends Controller
 
         return response()->json([
             'message' => 'Book found successfully',
-            'data' => $book
+            'data' => [
+                'id' => $book->id,
+                'title' => $book->title,
+                'isbn' => $book->isbn,
+                'publicationYear' => $book->publicationYear,
+                'genre' => $book->genre,
+                'availableCopies' => $book->availableCopies,
+                'author' => [
+                    // 'id' => $book->author->id,
+                    'name' => $book->author->name,
+                    // 'nationality' => $book->author->nationality,
+                    // 'bio' => $book->author->bio,
+                ]
+            ]
         ], 200);
     }
 

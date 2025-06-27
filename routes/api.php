@@ -22,6 +22,7 @@ use App\Http\Controllers\UserController;// Correct import with Usercontroller
 Route::get('books', [BookController::class, 'index']);
 Route::get('books/{id}', [BookController::class, 'show']);
 Route::post('books', [BookController::class, 'create']);
+Route::get('books/{id}', [BookController::class, 'show']);
 
 
 // Route::get('/books', [BookController::class, 'index']);
