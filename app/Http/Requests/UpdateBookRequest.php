@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateBookRequest extends FormRequest
 {
@@ -14,16 +12,6 @@ class UpdateBookRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    } 
-    protected function failedValidation(Validator $validator){
-
-        throw new HttpResponseException(
-            response()->json(
-                ['success' => false,
-                'message' => $validator->errors()
-            ], 412
-            )
-        );
     }
 
     /**
@@ -34,12 +22,12 @@ class UpdateBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'title' => 'required|string|min:2|max:255',
-            'isbn' => 'required|string|min:10|max:20',
-            'publicationYear' => 'required|integer|digits:4',
+            'title' => 'required|string|max:255',
+            'isbn' => 'required|string|unique:books,isbn,' . $this->route('book'),
+            'publicationYear' => 'required|integer|min:1000|max:' . date('Y'),
             'genre' => 'required|string|max:100',
-            'availableCopies' => 'required|integer|min:0'
+            'availableCopies' => 'required|integer|min:0',
+            'author_id' => 'required|exists:authors,id',
         ];
     }
 }

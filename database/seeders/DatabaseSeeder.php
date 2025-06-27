@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\Book;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,10 +20,13 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
+        // Count User factory
         User::factory(3)->create();
+        // Coount Book with relationship with author
+        Book::factory(3)->create();
 
         // Also run the custom user seeder (VandaaLeng)
         $this->call(UserSeeder::class);
+        $this->call(BookSeeder::class);
     }
 }

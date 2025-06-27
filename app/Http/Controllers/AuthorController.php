@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreAuthorRequest;
+use App\Http\Requests\UpdateAuthorRequest;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -11,43 +14,34 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        // Return a JSON response for one author only
+        $authors = Author::with('books')->get();
         return response()->json([
-            // Success message
-            'message' => 'All Authors Successfully',
-            // One author data
-            'data' => [
-                'id' => 'auth001',
-                'name' => 'John Doe',
-                'bio' => 'Author of tech books',
-                'nationality' => 'American'
-            ]
-        ],200);
+            'message' => 'All authors fetched successfully',
+            'data' => $authors
+        ], 200);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new author
      */
-    public function create(Request $request)
+    public function create(StoreAuthorRequest $request)
     {
-        //creation response 
+        $author = Author::create($request->only(['name', 'bio', 'nationality']));
+        
         return response()->json([
-            'message'=> 'Create AuthorSuccessfully',
-            'data'=> $request->all()
-        ],201);
+            'message' => 'Author created successfully',
+            'data' => $author->load('books')
+        ], 201);
     }
 
-    /** 
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // storing author
         return response()->json([
-            'message' => 'Author Created Sucessfully',
-            'data' => $request->all()
-            
-        ], 201);    
+            'message' => 'Store method not implemented, use create instead',
+        ], 400);
     }
 
     /**
@@ -55,46 +49,55 @@ class AuthorController extends Controller
      */
     public function show(string $id)
     {
-        // Showing author
+        $author = Author::with('books')->find($id);
+        if (!$author) {
+            return response()->json([
+                'message' => 'Author not found'
+            ], 404);
+        }
+
         return response()->json([
-            'message' => 'Author Found',
-            'data' => [
-                'id' => $id,
-                'name' => 'Vanda Leng',
-                'bio' => 'Author History',
-                'nationality' => 'Cambodia'
-            ]
+            'message' => 'Author found successfully',
+            'data' => $author
         ], 200);
     }
-
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $author = Author::with('books')->find($id);
+        if (!$author) {
+            return response()->json([
+                'message' => 'Author not found'
+            ], 404);
+        }
+
         return response()->json([
-            'message'=> "Edit Author Successfully",
-            'data'=>[
-                'id' => $id,
-                'name' => "Vanda Leng",
-             
-            ]
-            ],201);
+            'message' => 'Author edit form fetched successfully',
+            'data' => $author
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAuthorRequest $request, string $id)
     {
-        // update Author
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json([
+                'message' => 'Author not found'
+            ], 404);
+        }
+
+        $author->update($request->only(['name', 'bio', 'nationality']));
+
         return response()->json([
-            'message' => 'Author Updated Successfully',
-            'id' => $id,
-            'updatedData' => $request->all()
-        ],200);
+            'message' => 'Author updated successfully',
+            'data' => $author->load('books')
+        ], 200);
     }
 
     /**
@@ -102,10 +105,18 @@ class AuthorController extends Controller
      */
     public function destroy(string $id)
     {
-        //Destory Author
+        $author = Author::find($id);
+        if (!$author) {
+            return response()->json([
+                'message' => 'Author not found'
+            ], 404);
+        }
+
+        $author->delete(); // Books are deleted via cascade
+
         return response()->json([
-            'message' => "Author Deleted Successfully",
+            'message' => 'Author deleted successfully',
             'id' => $id
-        ],200);
+        ], 200);
     }
 }

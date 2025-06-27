@@ -6,15 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up()
+    public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            // unique by default can check product code 
             $table->string('isbn')->unique();
             $table->integer('publicationYear');
             $table->string('genre');
             $table->integer('availableCopies');
+            // Make the relationship with the author 
+            $table->foreignId('author_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

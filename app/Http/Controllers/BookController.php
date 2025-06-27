@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Validator;
 
 class BookController extends Controller
 {
-    // Get all books
+    // Get all books with their author
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('author')->get();
         return response()->json([
             'message' => 'All books fetched successfully',
             'data' => $books
@@ -23,14 +23,15 @@ class BookController extends Controller
     // Create a new book
     public function create(StorePostRequest $request)
     {
-         $books = Book::create($request->all());
-         return response()->json([
-            'message' => 'Success',
-            'data' => $books
-         ], 201);
+        $book = Book::create($request->only(['title', 'isbn', 'publicationYear', 'genre', 'availableCopies', 'author_id']));
+        
+        return response()->json([
+            'message' => 'Book created successfully',
+            'data' => $book->load('author')
+        ], 201);
     }
 
-    // Store method can be removed or return error
+    // Store method not used
     public function store(Request $request)
     {
         return response()->json([
@@ -38,10 +39,10 @@ class BookController extends Controller
         ], 400);
     }
 
-    // Get one book by ID
+    // Get one book by ID with its author
     public function show(string $id)
     {
-        $book = Book::find($id);
+        $book = Book::with('author')->find($id);
         if (!$book) {
             return response()->json([
                 'message' => 'Book not found'
@@ -54,10 +55,10 @@ class BookController extends Controller
         ], 200);
     }
 
-    // Show book data for editing (optional)
+    // Show book data for editing
     public function edit(UpdateBookRequest $request, string $id)
     {
-        $book = Book::find($id);
+        $book = Book::with('author')->find($id);
         if (!$book) {
             return response()->json([
                 'message' => 'Book not found'
@@ -71,7 +72,7 @@ class BookController extends Controller
     }
 
     // Update book by ID
-   public function update(UpdateBookRequest $request, string $id)
+    public function update(UpdateBookRequest $request, string $id)
     {
         $book = Book::find($id);
 
@@ -81,11 +82,11 @@ class BookController extends Controller
             ], 404);
         }
 
-        $book->update($request->all());
+        $book->update($request->only(['title', 'isbn', 'publicationYear', 'genre', 'availableCopies', 'author_id']));
 
         return response()->json([
-            'message' => 'Success',
-            'data' => $book
+            'message' => 'Book updated successfully',
+            'data' => $book->load('author')
         ], 200);
     }
 
